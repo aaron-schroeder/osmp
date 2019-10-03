@@ -85,6 +85,13 @@ class TrailsNew(OsmpFeatureLayerCollection):
     super(TrailsNew, self).__init__('TrailsNEW')
 
 
+class Junctions(OsmpFeatureLayerCollection):
+  """Provides access to OSMP's TrailJunctions MapServer."""
+
+  def __init__(self):
+    super(Junctions, self).__init__('TrailJunctions')
+ 
+
 class DogRegs(OsmpFeatureLayerCollection):
   """Provides access to OSMP's DogRegs MapServer."""
 
@@ -211,9 +218,10 @@ class Access(OsmpFeature):
   def __init__(self, db_id):
     self.id = db_id
     self.id_field_name = 'ACCESSID'
-    feature = Trails().get_feature(self.id,
-                                   layer_id=0,
-                                   id_field_name=self.id_field_name)
+    feature = OsmpFeatureLayerCollection(
+        'TrailheadsAccessPoints').get_feature(self.id,
+                                  layer_id=0,
+                                  id_field_name=self.id_field_name)
     super(Access, self).__init__(feature)
 
 
